@@ -56,6 +56,40 @@
     .galleria-thumbnails-list {
       display: inline-block;
     }
+    /* Améliorations Slide 0 */
+    .slide-highlight {
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      padding: 30px !important;
+      border-radius: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      display: inline-block;
+      margin: 20px auto;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+    .btn-cta {
+      background: transparent;
+      color: #43f765 !important;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      text-decoration: none;
+      border: 2px solid #43f765;
+      padding: 12px 30px;
+      border-radius: 50px;
+      display: inline-block;
+      font-size: 1em;
+      transition: all 0.3s ease;
+      margin-top: 5px;
+    }
+    .btn-cta:hover {
+      background-color: #43f765;
+      color: #000 !important;
+      text-decoration: none;
+      box-shadow: 0 0 25px rgba(67, 247, 101, 0.6);
+      transform: translateY(-2px);
+    }
   </style>
 
 <!-- 
@@ -299,28 +333,54 @@ __:-.\|.'/_
   <div class="container" style="color: white; height: 90%">
     <div class="flexslider" id="flexslider_home" style="margin:0px; background:none; border:none; box-shadow:none;">
       <ul class="slides">
-        <!-- SLIDE 1 -->
+        <!-- SLIDE 0 — Evènements -->
         <li>
-          <div class="slide">
-            <img style="width:250px; display: initial" src="images/logo-big.png" alt="band logo">
-            <h1>Les Negitachi</h1>
-            <h3>Nouveau : Abonnez-vous à notre newsletter !</h3>
-            <h3><a style="color: white;" href="https://newsletter.negitachi.fr">newsletter.negitachi.fr</a></h3>
+          <div class="slide" style="padding-top: 10px; text-align: center;">
+            <div class="slide-highlight">
+              <div style="width: 100%; text-align: center;">
+                <img 
+                  src="images/triforce2.png"
+                  alt="Affiche Back to the Triforce"
+                  style="
+                    max-width: 280px;
+                    width: 80%;
+                    display: block;
+                    margin: 0 auto 20px auto;
+                    border-radius: 12px;
+                    box-shadow: 0 0 20px rgba(0,0,0,0.5);
+                  "
+                >
+              </div>
+          
+              <h1>Back to the Triforce</h1>
+          
+              <h3 class="subtitle">
+                Ne ratez pas le retour du concert évènement !
+              </h3>
+          
+              <h3 style="margin-top: 25px;">
+                <a 
+                  href="https://www.helloasso.com/associations/negitachi/evenements/back-to-the-triforce-le-retour"
+                  target="_blank"
+                  class="btn-cta"
+                >
+                  🎟 Réserver ma place
+                </a>
+              </h3>
+            </div>
           </div>
         </li>
+        <!-- SLIDES VIDEOS -->
         <li>
           <div class="slide">
-            <p>
-              <iframe style="width: 50vw; height: 28.125vw" src="https://www.youtube.com/embed/8cKJe6LtH8Q?si=tC13yaRjwrezzXEh?showinfo=0" allowfullscreen></iframe>
-            </p>
+            <div id="yt-latest-1"></div>
             <h3>Extrait d'un de nos concerts !</h3>
           </div>
         </li>
+        
         <li>
           <div class="slide">
-            <p>
-              <iframe style="width: 50vw; height: 28.125vw" src="https://www.youtube.com/embed/3siyvBt1IlE?si=O5KTx7i4xnxuBxXJ?showinfo=0" allowfullscreen></iframe>
-            </p>
+            <div id="yt-latest-2"></div>
             <h3>Plus d'extraits sur notre chaîne YouTube !</h3>
           </div>
         </li>
@@ -897,6 +957,25 @@ __:-.\|.'/_
   });
   reorder_concert_dates()
 
+  // Récupération automatique des 2 dernières vidéos de la playlist
+  const YT_PLAYLIST_ID = 'PLQHuhNI1Q8hwaHS-wns_cA3azuTBewYUM';
+  const YT_API_KEY = firebaseConfig.apiKey; // Utilise la clé API existante
+
+  async function loadLatestVideos() {
+    try {
+      const response = await fetch(`https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=2&playlistId=${YT_PLAYLIST_ID}&key=${YT_API_KEY}`);
+      const data = await response.json();
+      if (data.items && data.items.length >= 2) {
+        const v1 = data.items[0].snippet.resourceId.videoId;
+        const v2 = data.items[1].snippet.resourceId.videoId;
+        document.getElementById('yt-latest-1').src = `https://www.youtube.com/embed/${v1}?showinfo=0`;
+        document.getElementById('yt-latest-2').src = `https://www.youtube.com/embed/${v2}?showinfo=0`;
+      }
+    } catch (e) {
+      console.error("Erreur lors de la mise à jour des vidéos YouTube :", e);
+    }
+  }
+  loadLatestVideos();
 </script>
 
 <script>
@@ -920,8 +999,33 @@ __:-.\|.'/_
 </script>
 
 <script>
+  const API_KEY = "AIzaSyDzgeGlTUuVxfOwluKp0TxrrBrrws9lP8U";
+  const PLAYLIST_ID = "PLQHuhNI1Q8hwaHS-wns_cA3azuTBewYUM";
   
-</script>
+  async function loadLatestVideos() {
+    const url =
+      `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=2&playlistId=${PLAYLIST_ID}&key=${API_KEY}`;
+  
+    const res = await fetch(url);
+    const data = await res.json();
+  
+    data.items.forEach((item, index) => {
+      const videoId = item.snippet.resourceId.videoId;
+  
+      const iframe = document.createElement("iframe");
+      iframe.width = "50vw";
+      iframe.height = "28.125vw";
+      iframe.src = `https://www.youtube.com/embed/${videoId}`;
+      iframe.allowFullscreen = true;
+      iframe.style.border = "none";
+  
+      const target = document.getElementById(`yt-latest-${index + 1}`);
+      if (target) target.appendChild(iframe);
+    });
+  }
+  
+  loadLatestVideos();
+  </script>
 
 </body>
 </html>
