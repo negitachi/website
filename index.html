@@ -90,6 +90,20 @@
       box-shadow: 0 0 25px rgba(67, 247, 101, 0.6);
       transform: translateY(-2px);
     }
+    .yt-wrapper {
+      width: 100%;
+      max-width: 700px;
+      margin: 0 auto;
+      aspect-ratio: 16 / 9;
+      position: relative;
+    }
+
+    .yt-wrapper iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block;
+    }
   </style>
 
 <!-- 
@@ -373,14 +387,15 @@ __:-.\|.'/_
         <!-- SLIDES VIDEOS -->
         <li>
           <div class="slide">
-            <div id="yt-latest-1"></div>
-            <h3>Extrait d'un de nos concerts !</h3>
-          </div>
+            <div class="slide">
+              <p id="yt-latest-1" style="text-align:center;"></p>
+              <h3>Extrait d'un de nos concerts !</h3>
+            </div>
         </li>
         
         <li>
           <div class="slide">
-            <div id="yt-latest-2"></div>
+            <p id="yt-latest-2" style="text-align:center;"></p>
             <h3>Plus d'extraits sur notre chaîne YouTube !</h3>
           </div>
         </li>
@@ -1003,27 +1018,37 @@ __:-.\|.'/_
   const PLAYLIST_ID = "PLQHuhNI1Q8hwaHS-wns_cA3azuTBewYUM";
   
   async function loadLatestVideos() {
-    const url =
-      `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=2&playlistId=${PLAYLIST_ID}&key=${API_KEY}`;
-  
-    const res = await fetch(url);
-    const data = await res.json();
-  
-    data.items.forEach((item, index) => {
-      const videoId = item.snippet.resourceId.videoId;
-  
-      const iframe = document.createElement("iframe");
-      iframe.width = "50vw";
-      iframe.height = "28.125vw";
-      iframe.src = `https://www.youtube.com/embed/${videoId}`;
-      iframe.allowFullscreen = true;
-      iframe.style.border = "none";
-  
-      const target = document.getElementById(`yt-latest-${index + 1}`);
-      if (target) target.appendChild(iframe);
-    });
+
+  const url =
+    `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=2&playlistId=${PLAYLIST_ID}&key=${API_KEY}`;
+
+  const res = await fetch(url);
+  const data = await res.json();
+
+  data.items.forEach((item, index) => {
+
+    const videoId = item.snippet.resourceId.videoId;
+
+    const iframe = document.createElement("iframe");
+
+    iframe.src = `https://www.youtube.com/embed/${videoId}`;
+    iframe.allowFullscreen = true;
+
+    // EXACTEMENT comme ton ancien code
+    iframe.style.width = "50vw";
+    iframe.style.height = "28.125vw";
+    iframe.style.maxWidth = "800px";
+    iframe.style.border = "none";
+
+    const target = document.getElementById(`yt-latest-${index + 1}`);
+
+    if (target) {
+      target.appendChild(iframe);
+    }
+
+  });
   }
-  
+
   loadLatestVideos();
   </script>
 
