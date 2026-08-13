@@ -347,16 +347,18 @@ __:-.\|.'/_
   <div class="container" style="color: white; height: 90%">
     <div class="flexslider" id="flexslider_home" style="margin:0px; background:none; border:none; box-shadow:none;">
       <ul class="slides">
-        <!-- SLIDE 0 — Evènements -->
+        <!-- SLIDE 0 — Recrutement -->
         <li>
           <div class="slide" style="padding-top: 10px; text-align: center;">
             <div class="slide-highlight">
               <div style="width: 100%; text-align: center;">
                 <img 
-                  src="images/triforce2.png"
-                  alt="Affiche Back to the Triforce"
+                  src="images/recruit-banner.jpg"
+                  alt="Affiche Recrutement"
                   style="
-                    max-width: 280px;
+                    max-width: 420px;
+                    max-height: 40vh;
+                    object-fit: contain;
                     width: 80%;
                     display: block;
                     margin: 0 auto 20px auto;
@@ -366,31 +368,30 @@ __:-.\|.'/_
                 >
               </div>
           
-              <h1>Back to the Triforce</h1>
+              <h1>On recrute !</h1>
           
               <h3 class="subtitle">
-                Ne ratez pas le retour du concert évènement !
+                Rejoignez le groupe vocal le plus déjanté de Paris !<br>
+                Envie d'essayer ? Viens chanter dans un parc avec nous cet été !
               </h3>
           
-              <h3 style="margin-top: 25px;">
+              <p style="margin-top: 25px; margin-bottom: 0px;">
                 <a 
-                  href="https://www.helloasso.com/associations/negitachi/evenements/back-to-the-triforce-le-retour"
-                  target="_blank"
+                  href="#contact"
                   class="btn-cta"
                 >
-                  🎟 Réserver ma place
+                  ✉ Nous contacter
                 </a>
-              </h3>
+              </p>
             </div>
           </div>
         </li>
         <!-- SLIDES VIDEOS -->
         <li>
           <div class="slide">
-            <div class="slide">
-              <p id="yt-latest-1" style="text-align:center;"></p>
-              <h3>Extrait d'un de nos concerts !</h3>
-            </div>
+            <p id="yt-latest-1" style="text-align:center;"></p>
+            <h3>Extrait d'un de nos concerts !</h3>
+          </div>
         </li>
         
         <li>
@@ -972,25 +973,7 @@ __:-.\|.'/_
   });
   reorder_concert_dates()
 
-  // Récupération automatique des 2 dernières vidéos de la playlist
-  const YT_PLAYLIST_ID = 'PLQHuhNI1Q8hwaHS-wns_cA3azuTBewYUM';
-  const YT_API_KEY = firebaseConfig.apiKey; // Utilise la clé API existante
 
-  async function loadLatestVideos() {
-    try {
-      const response = await fetch(`https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=2&playlistId=${YT_PLAYLIST_ID}&key=${YT_API_KEY}`);
-      const data = await response.json();
-      if (data.items && data.items.length >= 2) {
-        const v1 = data.items[0].snippet.resourceId.videoId;
-        const v2 = data.items[1].snippet.resourceId.videoId;
-        document.getElementById('yt-latest-1').src = `https://www.youtube.com/embed/${v1}?showinfo=0`;
-        document.getElementById('yt-latest-2').src = `https://www.youtube.com/embed/${v2}?showinfo=0`;
-      }
-    } catch (e) {
-      console.error("Erreur lors de la mise à jour des vidéos YouTube :", e);
-    }
-  }
-  loadLatestVideos();
 </script>
 
 <script>
@@ -1016,41 +999,48 @@ __:-.\|.'/_
 <script>
   const API_KEY = "AIzaSyDzgeGlTUuVxfOwluKp0TxrrBrrws9lP8U";
   const PLAYLIST_ID = "PLQHuhNI1Q8hwaHS-wns_cA3azuTBewYUM";
-  
+  const DEFAULT_VIDEOS = ["eK3WFB74NHs", "xpumrLpI3Gg"];
+
   async function loadLatestVideos() {
-
-  const url =
-    `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=2&playlistId=${PLAYLIST_ID}&key=${API_KEY}`;
-
-  const res = await fetch(url);
-  const data = await res.json();
-
-  data.items.forEach((item, index) => {
-
-    const videoId = item.snippet.resourceId.videoId;
-
-    const iframe = document.createElement("iframe");
-
-    iframe.src = `https://www.youtube.com/embed/${videoId}`;
-    iframe.allowFullscreen = true;
-
-    // EXACTEMENT comme ton ancien code
-    iframe.style.width = "50vw";
-    iframe.style.height = "28.125vw";
-    iframe.style.maxWidth = "800px";
-    iframe.style.border = "none";
-
-    const target = document.getElementById(`yt-latest-${index + 1}`);
-
-    if (target) {
-      target.appendChild(iframe);
+    let videoIds = [...DEFAULT_VIDEOS];
+    try {
+      const url = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=2&playlistId=${PLAYLIST_ID}&key=${API_KEY}`;
+      const res = await fetch(url);
+      if (res.ok) {
+        const data = await res.json();
+        if (data && data.items && data.items.length >= 2) {
+          videoIds[0] = data.items[0].snippet.resourceId.videoId;
+          videoIds[1] = data.items[1].snippet.resourceId.videoId;
+        } else {
+          console.warn("Format de réponse YouTube API invalide, utilisation des vidéos par défaut.");
+        }
+      } else {
+        console.warn(`YouTube API retournée avec le statut ${res.status}, utilisation des vidéos par défaut.`);
+      }
+    } catch (e) {
+      console.error("Erreur lors de la mise à jour des vidéos YouTube (utilisation des vidéos par défaut) :", e);
     }
 
-  });
+    videoIds.forEach((videoId, index) => {
+      const target = document.getElementById(`yt-latest-${index + 1}`);
+      if (target) {
+        target.innerHTML = ""; // Vider le contenu existant
+        const iframe = document.createElement("iframe");
+        iframe.src = `https://www.youtube.com/embed/${videoId}?showinfo=0`;
+        iframe.allowFullscreen = true;
+
+        iframe.style.width = "50vw";
+        iframe.style.height = "28.125vw";
+        iframe.style.maxWidth = "800px";
+        iframe.style.border = "none";
+
+        target.appendChild(iframe);
+      }
+    });
   }
 
   loadLatestVideos();
-  </script>
+</script>
 
 </body>
 </html>
