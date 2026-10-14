@@ -7,14 +7,14 @@ This repository is a static website served directly from the repository root.
 - `index.html` is the main French-language site and contains most page markup and inline JavaScript.
 - `css/band.css` holds shared presentation styles.
 - `images/` and `videos/` contain site media; reuse existing assets where practical and optimize new files before committing.
-- `_newsletters/` archives unpublished newsletter HTML; `images/newsletters/` contains publicly served email media.
+- `images/newsletters/` contains publicly served email media; newsletter sources and publishing tools live in the separate private `newsletter-tools` repository.
 - `fdlm/` contains the Fête de la Musique index and individual song pages.
 - `concertS13/`, `don/`, and `plusdinfos/` are standalone sections with their own `index.html` entry points.
 - Root-level `concert*.html` files are small concert-specific or redirect pages. `CNAME` configures the custom GitHub Pages domain.
 
 Use relative URLs so pages continue to work both locally and on GitHub Pages. Preserve French accents and the existing UTF-8 encoding.
 
-In newsletters, use full `https://www.negitachi.fr/images/newsletters/...` image URLs. Never store subscriber data or secrets in `_newsletters/`; files remain visible on GitHub.
+Newsletter images must remain publicly accessible at `https://www.negitachi.fr/images/newsletters/...`. Never store subscriber data, newsletter source HTML, or publishing credentials in this public repository.
 
 ## Build, Test, and Development Commands
 
