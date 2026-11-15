@@ -218,38 +218,6 @@ li.social a > span {
   right:0;
   background-image: linear-gradient(to top, black, transparent 100px);
 }
-.facebook {
-  position: fixed;
-  top: 100px;
-  right: -300px;
-  width: 300px;
-  -webkit-transition: right .2s linear;
-  -moz-transition: right .2s linear;
-  transition: right .2s linear;
-  border: 1px solid black;
-}
-.facebook > a, .facebook-inner {
-  position: absolute;
-  left: -35px;
-  top: 150px;
-  height: 35px;
-  transition: color 100ms ease-in-out;
-  -o-transition: color 100ms ease-in-out;
-  -ms-transition: color 100ms ease-in-out;
-  -moz-transition: color 100ms ease-in-out;
-  -webkit-transition: color 100ms ease-in-out;
-
-  transform: rotate(-90deg);
-  transform-origin: 0 0;
-  cursor: pointer;
-
-  background-color: #3b5998;
-  padding: 5px 10px 0 10px;
-  border-radius: 7px 7px 0 0;
-  font-family: 'Archivo Black', sans-serif !important;
-  font-size: 12pt;
-  color: #ffffff;
-}
 .twitter {
   position: fixed;
   top: 100px;
@@ -310,6 +278,75 @@ li.social a > span {
   border-top: 2px solid rgb(169, 169, 169);
   border-right: 2px solid white;
   border-bottom: 2px solid white;
+}
+.contact-privacy {
+  margin: 10px 0 15px;
+  font-size: 14px;
+}
+.contact-privacy p {
+  margin: 0;
+}
+.privacy-page {
+  margin: 0;
+  color: #222;
+  background: #f7f7f7;
+}
+.privacy-header {
+  background: #080c19;
+  padding: 12px 20px;
+}
+.privacy-header a {
+  color: #fff;
+  text-decoration: none;
+}
+.privacy-header img {
+  vertical-align: middle;
+  margin-right: 8px;
+}
+.privacy-content {
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 35px 20px 60px;
+  line-height: 1.6;
+}
+.privacy-content h1 {
+  margin: 0 0 8px;
+}
+.privacy-content h2 {
+  margin: 32px 0 10px;
+  font-size: 24px;
+}
+.privacy-content p {
+  margin: 0 0 12px;
+}
+.privacy-content .updated {
+  color: #555;
+  font-size: 14px;
+}
+.photos-preview {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 15px;
+}
+#photos {
+  min-height: 0;
+}
+#photos .PageHead {
+  padding-top: 20px;
+}
+.photos-preview img {
+  width: 100%;
+  height: 240px;
+  object-fit: cover;
+  border-radius: 15px;
+}
+@media (max-width: 767px) {
+  .photos-preview {
+    grid-template-columns: 1fr;
+  }
+  .photos-preview img {
+    height: auto;
+  }
 }
 .ContactUs input[type=button] {
   margin-top: 15px;
