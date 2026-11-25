@@ -173,11 +173,15 @@ iframe {
 .caption > img {
   border: 2px solid black;
 }
-li.social > a {
-  padding: 2px !important;
+.navbar-nav .social > a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 50px;
+  padding: 0 2px !important;
 }
-li.social a > span {
-  padding-left: 10px;
+.navbar-nav .social img {
+  display: block;
 }
 .pageOdd {
   color:#000;
@@ -392,6 +396,25 @@ li.social a > span {
   }
 }
 @media (max-width: 767px)  {
+  #bs-example-navbar-collapse-1 .social {
+    display: none;
+  }
+  #navbar .navbar-header > .navbar-menu-toggle {
+    margin: 8px 0;
+  }
+  #navbar .navbar-header > .navbar-social-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 39px;
+    height: 50px;
+    margin: 0;
+    padding: 0 2px;
+    border: 0;
+  }
+  #navbar .navbar-social-icon img {
+    display: block;
+  }
   .jumbotron {
     padding:20px 20px;
     margin-top:-20px;

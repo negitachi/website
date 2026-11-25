@@ -11,7 +11,7 @@
   <!-- icon -->
   <link rel="icon" href="images/logo-small.png" />
   <!-- CSS -->
-  <link href="css/band.css?v=20261109-confidentialite" rel="stylesheet" media="all">
+  <link href="css/band.css?v=20261125-menu-align" rel="stylesheet" media="all">
   <!-- Fonts -->
   <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
   <link href='https://fonts.googleapis.com/css?family=Josefin+Sans' rel='stylesheet' type='text/css'>
@@ -164,7 +164,7 @@ __:-.\|.'/_
 
   <script>
     $(function() {
-      $('.nav li a, .jumbotron p a, #recruitlink').bind('click',function(event){
+      $('.nav li a[href^="#"], .jumbotron p a[href^="#"], #recruitlink').bind('click',function(event){
         var $anchor2 = $(this).parent();
         var $anchor = $(this);
         $('.nav  li').removeClass('active');
@@ -264,17 +264,16 @@ __:-.\|.'/_
   <div class="container-fluid">
     <div class="navbar-header">
       <a class="navbar-brand" style="padding: 0; display: inline" href="#"><img height="47" width="50" src="images/logo-small.png" alt="band logo"></a>
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false" style="margin: 0 0 0 0">
-        <span class="icon-bar"></span>
+      <button type="button" class="navbar-toggle collapsed navbar-menu-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-controls="bs-example-navbar-collapse-1" aria-label="Menu" aria-expanded="false">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-toggle collapsed" style="margin: 0px; padding: 2px" href="https://www.helloasso.com/associations/negitachi" target="_blank"><img alt="HelloAsso" src="images/helloasso-icon.png" width="35" height="35"/></a>
-      <a class="navbar-toggle collapsed" style="margin: 0px; padding: 2px" href="https://www.flickr.com/photos/negitachi" target="_blank"><img alt="Flickr" src="images/flickr-icon.png" width="35" height="35"/></a>
-      <a class="navbar-toggle collapsed" style="margin: 0px; padding: 2px" href="https://www.youtube.com/user/Negitachi" target="_blank"><img alt="YouTube" src="images/youtube-icon.png" width="35" height="35"/></a>
-      <a class="navbar-toggle collapsed" style="margin: 0px; padding: 2px" href="https://www.facebook.com/negitachi" target="_blank"><img alt="Facebook" src="images/facebook-icon.png" width="35" height="35"/></a>
-      <a class="navbar-toggle collapsed" style="margin: 0px; padding: 2px" href="https://newsletter.negitachi.fr" target="_blank"><img alt="Newsletter" src="images/newsletter.png" width="35" height="35"/></a>
+      <a class="navbar-toggle collapsed navbar-social-icon" href="https://newsletter.negitachi.fr" target="_blank" rel="noopener noreferrer"><img alt="Newsletter" src="images/newsletter.png" width="35" height="35"/></a>
+      <a class="navbar-toggle collapsed navbar-social-icon" href="https://www.helloasso.com/associations/negitachi" target="_blank" rel="noopener noreferrer"><img alt="HelloAsso" src="images/helloasso-icon.png" width="35" height="35"/></a>
+      <a class="navbar-toggle collapsed navbar-social-icon" href="https://www.instagram.com/negitachi" target="_blank" rel="noopener noreferrer"><img alt="Instagram" src="images/instagram-icon.png" width="35" height="35"/></a>
+      <a class="navbar-toggle collapsed navbar-social-icon" href="https://www.facebook.com/negitachi" target="_blank" rel="noopener noreferrer"><img alt="Facebook" src="images/facebook-icon.png" width="35" height="35"/></a>
+      <a class="navbar-toggle collapsed navbar-social-icon" href="https://www.youtube.com/user/Negitachi" target="_blank" rel="noopener noreferrer"><img alt="YouTube" src="images/youtube-icon.png" width="35" height="35"/></a>
     </div>
 
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -288,31 +287,21 @@ __:-.\|.'/_
         <li><a href="#recruit">Recrutement</a></li>
         <li><a href="#press">Presse</a></li>
         <li><a href="#contact">Contact</a></li>
-            <li class="social">
-              <a href="https://www.facebook.com/negitachi" target="_blank">
-                <img alt="Facebook" src="images/facebook-icon.png" width="35" height="35"/>
-            </a>&nbsp;
-            </li>
-            <li class="social">
-              <a href="https://www.youtube.com/user/Negitachi" target="_blank">
-                <img alt="YouTube" src="images/youtube-icon.png" width="35" height="35"/>
-              </a>&nbsp;
-            </li>
-            <li class="social">
-              <a href="https://www.instagram.com/negitachi" target="_blank">
-                <img alt="Instagram" src="images/instagram-icon.png" width="35" height="35"/>
-              </a>&nbsp;
-            </li>
-            <li class="social">
-              <a href="https://www.helloasso.com/associations/negitachi" target="_blank">
-                <img alt="HelloAsso" src="images/helloasso-icon.png" width="35" height="35"/>
-              </a>&nbsp;
-            </li>
-            <li class="social">
-              <a href="https://newsletter.negitachi.fr" target="_blank">
-                <img alt="Newsletter" src="images/newsletter.png" width="35" height="35"/>
-              </a>&nbsp;
-            </li>
+        <li class="social">
+          <a href="https://www.youtube.com/user/Negitachi" target="_blank" rel="noopener noreferrer"><img alt="YouTube" src="images/youtube-icon.png" width="35" height="35"/></a>
+        </li>
+        <li class="social">
+          <a href="https://www.facebook.com/negitachi" target="_blank" rel="noopener noreferrer"><img alt="Facebook" src="images/facebook-icon.png" width="35" height="35"/></a>
+        </li>
+        <li class="social">
+          <a href="https://www.instagram.com/negitachi" target="_blank" rel="noopener noreferrer"><img alt="Instagram" src="images/instagram-icon.png" width="35" height="35"/></a>
+        </li>
+        <li class="social">
+          <a href="https://www.helloasso.com/associations/negitachi" target="_blank" rel="noopener noreferrer"><img alt="HelloAsso" src="images/helloasso-icon.png" width="35" height="35"/></a>
+        </li>
+        <li class="social">
+          <a href="https://newsletter.negitachi.fr" target="_blank" rel="noopener noreferrer"><img alt="Newsletter" src="images/newsletter.png" width="35" height="35"/></a>
+        </li>
       </ul>
     </div>
   </div>
